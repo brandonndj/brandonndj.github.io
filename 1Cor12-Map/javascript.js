@@ -20,6 +20,50 @@ function initMap() {
     minZoom: 10,
   });
 
+  const triangleCoords = [
+
+    { lat: 103.8613145, lng: 1.3694523 },
+    { lat: 103.8593404, lng: 1.3634458 },
+    { lat: 103.8569372, lng: 1.3569246 },
+    { lat: 103.8570659, lng: 1.35272 },
+    { lat: 103.8608854, lng: 1.3432384 },
+    { lat: 103.864619, lng: 1.3443109 },
+    { lat: 103.866121, lng: 1.3440964 },
+    { lat: 103.8704984, lng: 1.342509 },
+    { lat: 103.8708417, lng: 1.3448258 },
+    { lat:  103.8715713, lng: 1.3467135 },
+    { lat: 103.8738458, lng: 1.3499742 },
+    { lat:  103.8725583, lng: 1.3516045 },
+    { lat:  103.8726871, lng: 1.3532778 },
+    { lat:  103.8730304, lng: 1.354951 },
+    { lat:  103.8736741 lng: 1.3558949 },
+    { lat:  103.8739316, lng: 1.3569246 },
+    { lat:  103.8740604, lng: 1.3585978 },
+    { lat: 103.8731162, lng: 1.3621588 },
+    { lat: 103.8736312, lng: 1.3632742 },
+    { lat: 103.8746612, lng: 1.3651191 },
+    { lat: 103.8764636, lng: 1.3697955 },
+    { lat: 103.8686101, lng: 1.3718978 },
+    { lat: 103.866636, lng: 1.3717262 },
+    { lat: 103.8653486, lng: 1.3708681 },
+    { lat: 103.8613145, lng: 1.3694523 },
+
+
+  ];
+
+  const bermudaTriangle = new google.maps.Polygon({
+    paths: triangleCoords,
+    strokeColor: "#FF0000",
+    strokeOpacity: 0.8,
+    strokeWeight: 3,
+    fillColor: "#FF0000",
+    fillOpacity: 0.35,
+  });
+
+
+  bermudaTriangle.setMap(map);
+
+
   heatmap = new google.maps.visualization.HeatmapLayer({
     data: getPoints(),
     map: map,
