@@ -138,9 +138,9 @@ function initMap() {
     ]),
   });
 
-
-
-
+  document
+    .getElementById("load-counter")
+    .addEventListener("click", loadCounter);
   document
     .getElementById("toggle-heatmap")
     .addEventListener("click", toggleHeatmap);
@@ -153,6 +153,62 @@ function initMap() {
   document
     .getElementById("change-radius")
     .addEventListener("click", changeRadius);
+}
+
+function loadCounter(){
+  var addressArray = getPoints();
+  var addressCount = addressArray.length;
+
+  var positiveCount = 0;
+  var negativeCount = 0;
+
+  newBoundary = [
+    new google.maps.LatLng(1.3694523,103.8613145),
+    new google.maps.LatLng(1.3634458,103.8593404),
+    new google.maps.LatLng(1.3569246,103.8569372),
+    new google.maps.LatLng(1.35272,103.8570659),
+    new google.maps.LatLng(1.3432384,103.8608854),
+    new google.maps.LatLng(1.3443109,103.864619),
+    new google.maps.LatLng(1.3440964,103.866121),
+    new google.maps.LatLng(1.342509,103.8704984),
+    new google.maps.LatLng(1.3448258,103.8708417),
+    new google.maps.LatLng(1.3467135,103.8715713),
+    new google.maps.LatLng(1.3499742,103.8738458),
+    new google.maps.LatLng(1.3516045,103.8725583),
+    new google.maps.LatLng(1.3532778,103.8726871),
+    new google.maps.LatLng(1.354951,103.8730304),
+    new google.maps.LatLng(1.3558949,103.8736741),
+    new google.maps.LatLng(1.3569246,103.8739316),
+    new google.maps.LatLng(1.3585978,103.8740604),
+    new google.maps.LatLng(1.3621588,103.8731162),
+    new google.maps.LatLng(1.3632742,103.8736312),
+    new google.maps.LatLng(1.3651191,103.8746612),
+    new google.maps.LatLng(1.3697955,103.8764636),
+    new google.maps.LatLng(1.3718978,103.8686101),
+    new google.maps.LatLng(1.3717262,103.866636),
+    new google.maps.LatLng(1.3708681,103.8653486),
+    new google.maps.LatLng(1.3694523,103.8613145),
+   ];
+
+    var newBoundaryMap = new google.maps.Polygon({
+      paths: newBoundary
+  });
+
+  for(a = 0; a < addressCount; a++) {
+    
+    if (google.maps.geometry.poly.containsLocation(addressArray[a],newBoundaryMap))
+    {
+      positiveCount++;
+    }
+
+    else negativeCount++;
+
+  } 
+
+
+    document.getElementById("countInside").innerHTML = positiveCount;
+    document.getElementById("countOutside").innerHTML = negativeCount;
+
 }
 
 function toggleHeatmap() {
