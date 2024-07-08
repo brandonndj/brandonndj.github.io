@@ -337,7 +337,8 @@ function getPoints() {
     new google.maps.LatLng(1.35318021089479, 103.867119538611),
     new google.maps.LatLng(1.35526639245446, 103.863585037975),
     new google.maps.LatLng(1.35328810773066, 103.865796441043),
-    new google.maps.LatLng(1.36307225746, 103.868082537171)
+    new google.maps.LatLng(1.36307225746, 103.868082537171),
+    new google.maps.LatLng(1.31736223877921, 103.82875324222),
   ];
 }
 
