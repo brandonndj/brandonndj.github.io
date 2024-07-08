@@ -208,8 +208,8 @@ function loadCounter(){
   } 
 
 
-    document.getElementById("countInside").innerHTML = positiveCount;
-    document.getElementById("countOutside").innerHTML = negativeCount;
+    document.getElementById("countInside").innerHTML = (Math.round(positiveCount/addressCount * 100) );
+    document.getElementById("countOutside").innerHTML = (Math.round(negativeCount/addressCount * 100) );
 
 }
 
