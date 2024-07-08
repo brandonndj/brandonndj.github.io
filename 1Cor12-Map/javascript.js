@@ -138,6 +138,8 @@ function initMap() {
     ]),
   });
 
+  loadCounter();
+
   document
     .getElementById("load-counter")
     .addEventListener("click", loadCounter);
