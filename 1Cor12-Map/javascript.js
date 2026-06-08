@@ -6,7 +6,30 @@
 // This example requires the Visualization library. Include the libraries=visualization
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
-let map, heatmap;
+let map, heatmapOverlay, heatmapLayerProps;
+
+const DEFAULT_GRADIENT = [
+  [0, 255, 255, 0],
+  [0, 255, 255, 255],
+  [0, 191, 255, 255],
+  [0, 127, 255, 255],
+  [0, 63, 255, 255],
+  [0, 0, 255, 255],
+  [0, 0, 223, 255],
+  [0, 0, 191, 255],
+  [0, 0, 159, 255],
+  [0, 0, 127, 255],
+  [63, 0, 91, 255],
+  [127, 0, 63, 255],
+  [191, 0, 31, 255],
+  [255, 0, 0, 255],
+];
+
+function renderHeatmapLayer() {
+  heatmapOverlay.setProps({
+    layers: [new deck.HeatmapLayer(heatmapLayerProps)],
+  });
+}
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -20,11 +43,19 @@ function initMap() {
     minZoom: 10,
   });
 
-  heatmap = new google.maps.visualization.HeatmapLayer({
-    data: getPoints(),
-    map: map,
-    radius: 75,
-  });
+  heatmapLayerProps = {
+    id: "heatmap",
+    visible: true,
+    data: getPoints().map((p) => ({ lat: p.lat(), lng: p.lng() })),
+    getPosition: (d) => [d.lng, d.lat],
+    radiusPixels: 75,
+    intensity: 1,
+    opacity: 1,
+  };
+
+  heatmapOverlay = new deck.GoogleMapsOverlay({});
+  heatmapOverlay.setMap(map);
+  renderHeatmapLayer();
 
 
   const boundaryCoords = [
@@ -214,36 +245,26 @@ function loadCounter(){
 }
 
 function toggleHeatmap() {
-  heatmap.setMap(heatmap.getMap() ? null : map);
+  heatmapLayerProps.visible = !heatmapLayerProps.visible;
+  renderHeatmapLayer();
 }
 
 function changeGradient() {
-  const gradient = [
-    "rgba(0, 255, 255, 0)",
-    "rgba(0, 255, 255, 1)",
-    "rgba(0, 191, 255, 1)",
-    "rgba(0, 127, 255, 1)",
-    "rgba(0, 63, 255, 1)",
-    "rgba(0, 0, 255, 1)",
-    "rgba(0, 0, 223, 1)",
-    "rgba(0, 0, 191, 1)",
-    "rgba(0, 0, 159, 1)",
-    "rgba(0, 0, 127, 1)",
-    "rgba(63, 0, 91, 1)",
-    "rgba(127, 0, 63, 1)",
-    "rgba(191, 0, 31, 1)",
-    "rgba(255, 0, 0, 1)",
-  ];
-
-  heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
+  heatmapLayerProps.colorRange = heatmapLayerProps.colorRange
+    ? undefined
+    : DEFAULT_GRADIENT;
+  renderHeatmapLayer();
 }
 
 function changeRadius() {
-  heatmap.set("radius", heatmap.get("radius") ? null : 30);
+  heatmapLayerProps.radiusPixels =
+    heatmapLayerProps.radiusPixels === 75 ? 30 : 75;
+  renderHeatmapLayer();
 }
 
 function changeOpacity() {
-  heatmap.set("opacity", heatmap.get("opacity") ? null : 0.2);
+  heatmapLayerProps.opacity = heatmapLayerProps.opacity === 1 ? 0.2 : 1;
+  renderHeatmapLayer();
 }
 
 // Heatmap data: 500 Points
